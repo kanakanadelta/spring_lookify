@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wos.lookify.models.Song;
 import com.wos.lookify.services.SongService;
@@ -85,4 +86,12 @@ public class SongsController {
 		return "topTen.jsp";
 	}
 	
+	//Search for Song
+	@GetMapping("/search")
+	public String search(@RequestParam(value="query") String query, Model model) {
+		List<Song> songList = songService.searchByArtist(query);
+		model.addAttribute("queryResults", songList);
+		model.addAttribute("query", query);
+		return "results.jsp";
+	}
 }

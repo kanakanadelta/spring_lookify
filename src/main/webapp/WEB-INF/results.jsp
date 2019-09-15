@@ -2,27 +2,22 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ page isErrorPage="true" %>
-
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="style.css" />
 <meta charset="UTF-8">
-<link rel="stylesheet" href="style.css" />
-<title>Lookify</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<!-- 1. NAVBAR -->
 	<div id="navbar">
-		<a href="/songs/new">Add New</a>
-		<a href="/search/topTen">Top Ten</a>
+		<span>Songs by artist: ${query}</span>
 		<form action="/search" method="GET">
-			<input type="text" name="query"/>
+			<input type="text" name="query" placeholder="${query}"/>
 			<input type="submit" value="Search"/>
 		</form>
+		<a href="/dashboard">Dashboard</a>
 	</div>
-	
-	<!-- 2. SONG LIST -->
 	<div id="songtable">
 		<table>
 			<thead>
@@ -33,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${songs}" var="song">
+				<c:forEach items="${queryResults}" var="song">
 					<tr>
 						<td>
 							<a href="/songs/${song.id}">
@@ -49,7 +44,7 @@
 								<input type="submit" value="Delete">
 							</form>
 						</td>
-					</tr>
+					</tr>	
 				</c:forEach>
 			</tbody>
 		</table>

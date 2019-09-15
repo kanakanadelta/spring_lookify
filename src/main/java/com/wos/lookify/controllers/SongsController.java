@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ public class SongsController {
 		return "index.jsp";
 	}
 	
-	// RESTFUL ROUTES SET UP //
+	// RESTFUL ROUTES SET UP (sans edit and update)//
 	
 	//1. INDEX - Display all songs
 	@GetMapping("/dashboard")
@@ -59,7 +60,7 @@ public class SongsController {
 		}
 	}
 	
-	//4. SHOW - Show infoabout certain song
+	//4. SHOW - Show info about certain song
 	@GetMapping("/songs/{id}")
 	public String show(@PathVariable("id")Long id, Model model) {
 		Song song = songService.findSong(id);
@@ -67,7 +68,12 @@ public class SongsController {
 		return "show.jsp";
 	}
 	
-	
+	//5. DESTROY - Delete a song from the database
+	@DeleteMapping("/songs/{id}")
+	public String destroy(@PathVariable("id") Long id) {
+		songService.deleteSong(id);
+		return "redirect:/dashboard";
+	}
 	
 	// ADDITIONAL FUNCTIONALITIES:
 	

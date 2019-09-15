@@ -77,7 +77,6 @@ public class SongService {
 	}
 	
 	// SORT BY RATING
-	
 	class SortByRating implements Comparator<Song> {
 		public int compare(Song a, Song b) {
 			return b.getRating() - a.getRating();

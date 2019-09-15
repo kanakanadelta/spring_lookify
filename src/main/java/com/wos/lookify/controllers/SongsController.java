@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -58,15 +59,23 @@ public class SongsController {
 		}
 	}
 	
+	//4. SHOW - Show infoabout certain song
+	@GetMapping("/songs/{id}")
+	public String show(@PathVariable("id")Long id, Model model) {
+		Song song = songService.findSong(id);
+		model.addAttribute("song", song);
+		return "show.jsp";
+	}
+	
 	
 	
 	// ADDITIONAL FUNCTIONALITIES:
+	
+	//Sorted List for Top Ten
 	@GetMapping("/search/topTen")
 	public String topTen(Model model, @ModelAttribute("song") Song song) {
 		List<Song> sortedSongs = songService.sortByRating(songService.allSongs());
 		model.addAttribute("sortedSongs", sortedSongs);
-//		List<Song> songs = songService.allSongs();
-//		model.addAttribute("songs", songs);
 		return "topTen.jsp";
 	}
 	

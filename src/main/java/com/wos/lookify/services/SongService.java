@@ -1,5 +1,7 @@
 package com.wos.lookify.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +49,7 @@ public class SongService {
 			Long id,
 			String title,
 			String artist,
-			int rating
+			Integer rating
 			) {
 		Optional<Song> optionalSong = songRepo.findById(id);
 		if(optionalSong.isPresent()) {
@@ -74,5 +76,17 @@ public class SongService {
 		}
 	}
 	
+	// SORT BY RATING
+	
+	class SortByRating implements Comparator<Song> {
+		public int compare(Song a, Song b) {
+			return b.getRating() - a.getRating();
+		}
+	}
+	public List<Song> sortByRating(List<Song> songList) {
+		Collections.sort(songList, new SortByRating());
+		System.out.println(songList.toString());
+		return songList;
+	}
 	// END SERVICE
 }

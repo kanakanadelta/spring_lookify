@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,16 +25,17 @@ public class Song {
 	private Long id;
 	
 	// Generate title  - min 5 chars:
-	@Size(min=2)
+	@Size(min=2, max=20)
 	private String title;
 	
 	// Generate artist name - min 5 chars:
-	@Size(min=5)
+	@Size(min=5, max=20)
 	private String artist;
 	
 	// Generate rating - num from 1 to 10:
-	@Size(min=1, max=10)
-	private int rating;
+	@Min(1)
+	@Max(10)
+	private Integer rating;
 	
 	// Generate dates:
 	
@@ -48,7 +51,7 @@ public class Song {
     public Song(
     	String title,
     	String artist,
-    	int rating
+    	Integer rating
     	) {
     	this.title = title;
     	this.artist = artist;
@@ -85,11 +88,11 @@ public class Song {
 		this.artist = artist;
 	}
 
-	public int getRating() {
+	public Integer getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
 
